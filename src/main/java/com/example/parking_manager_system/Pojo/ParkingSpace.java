@@ -19,7 +19,8 @@ public class ParkingSpace {
     Long id;
     String zone;
     String idInZone;
-    Date expirationTime;
+    Timestamp startLeaseTime;
+    Timestamp expirationTime;
     @ManyToOne
     ParkingUser leaseholder;
 

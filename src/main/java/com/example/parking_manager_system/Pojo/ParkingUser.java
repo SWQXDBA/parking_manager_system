@@ -19,7 +19,7 @@ public class ParkingUser {
     @Id
     Long id;
     String userName;
-
+    String passWord;
     @OneToMany
     Set<ParkingSpace> parkingSpaces;
 

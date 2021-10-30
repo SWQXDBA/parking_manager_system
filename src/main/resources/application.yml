@@ -9,3 +9,5 @@ spring:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/parking
     username: root
     password: q12345
+
+authKey: 123!@
