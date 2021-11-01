@@ -18,11 +18,12 @@ public class ParkingSpace {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     String zone;
+
     String idInZone;
     Timestamp startLeaseTime;
     Timestamp expirationTime;
     @ManyToOne
-    ParkingUser leaseholder;
+    ParkingUser leaseholder;//租户
 
     @CreationTimestamp
     Timestamp createTime;

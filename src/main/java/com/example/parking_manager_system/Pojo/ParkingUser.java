@@ -20,6 +20,7 @@ public class ParkingUser {
     Long id;
     String userName;
     String passWord;
+    String phoneNumber;
     @OneToMany
     Set<ParkingSpace> parkingSpaces;
 
