@@ -3,6 +3,7 @@ package com.example.parking_manager_system.Interceptor;
 
 import com.example.parking_manager_system.Dao.UserDao;
 import com.example.parking_manager_system.Exceptions.UnLoginException;
+import com.example.parking_manager_system.Service.AdminUserService;
 import com.example.parking_manager_system.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,6 @@ import org.springframework.web.util.WebUtils;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * 登陆验证
@@ -24,7 +24,8 @@ public class UserInterceptor implements HandlerInterceptor {
     UserDao userDao;
     @Autowired
     UserService userService;
-
+    @Autowired
+    AdminUserService adminUserService;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         Cookie tokenCookie = WebUtils.getCookie(request, "token");
@@ -32,11 +33,10 @@ public class UserInterceptor implements HandlerInterceptor {
             return false;
         }
         String token = tokenCookie.getValue();
-        if(userService.containsToken(token)){
+        if(userService.checkToken(token)||adminUserService.checkToken(token)){
             return true;
         }else{
             throw  new UnLoginException();
         }
-
     }
 }

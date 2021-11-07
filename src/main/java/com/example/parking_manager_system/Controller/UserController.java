@@ -1,19 +1,16 @@
 package com.example.parking_manager_system.Controller;
 
 import com.example.parking_manager_system.Pojo.AjaxResult;
+import com.example.parking_manager_system.Service.AdminUserService;
 import com.example.parking_manager_system.Service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.util.WebUtils;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping("user")
@@ -21,6 +18,10 @@ import javax.servlet.http.HttpSession;
 public class UserController {
     @Autowired
     UserService userService;
+
+    @Autowired
+    AdminUserService adminUserService;
+
     @RequestMapping("login")
     public AjaxResult login(@RequestParam(name = "username") String userName, @RequestParam(name = "password") String password , HttpServletResponse response){
         String token = userService.login(userName, password);
@@ -33,7 +34,7 @@ public class UserController {
 
     @RequestMapping("adminlogin")
     public AjaxResult adminlogin(@RequestParam(name = "username") String userName, @RequestParam(name = "password") String password , HttpServletResponse response){
-        String token = userService.login(userName, password);
+        String token = adminUserService.adminLogin(userName, password);
         if(token==null){
             return AjaxResult.error("用户名或密码错误");
         }

@@ -4,29 +4,23 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.parking_manager_system.Dao.UserDao;
-import com.example.parking_manager_system.Exceptions.UnLoginException;
+import com.example.parking_manager_system.Dao.AdminUserDao;
 import com.example.parking_manager_system.Model.JWTHelper;
+import com.example.parking_manager_system.Pojo.AdminUser;
 import com.example.parking_manager_system.Pojo.ParkingUser;
-import javassist.bytecode.ByteArray;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
-public class UserService {
+public class AdminUserService {
     @Autowired
-    UserDao userDao;
-
+    AdminUserDao adminUserDao;
     @Value("${authKey}")
     String authKey;
 
@@ -34,7 +28,6 @@ public class UserService {
     JWTHelper jwtHelper;
 
     Set<String> tokens = new HashSet<>();
-
     /**
      * 检查是否存在这个token以及token的有效性
      * @param token
@@ -51,22 +44,20 @@ public class UserService {
         try{
             jwtHelper.decode(token);
         }catch (Exception e){
-           return false;
+            return false;
         }
         return true;
-    }
-    public void addToken(String token){
-        tokens.add(token);
-    }
 
+    }
     /**
      * 进行登录验证 成功后返回一个新的token
      * @param userName
      * @param password
      * @return
      */
-    public String login(String userName, String password){
-        ParkingUser user = userDao.getParkingUserByUserNameAndPassWord(userName,toMd5(password));
+    public String adminLogin(String userName,String password){
+
+       AdminUser user = adminUserDao.getAdminUserByUserNameAndPassword(userName,toMd5(password));
 
         if(user==null){
             return null;
@@ -80,21 +71,10 @@ public class UserService {
                 .withExpiresAt(calendar.getTime())//设置过期时间
                 .sign(Algorithm.HMAC256(authKey));
 
-        addToken(token);
+        tokens.add(token);
         return  token;
-    }
-    public boolean register(String userName,String passWord){
-        if(userDao.getParkingUserByUserName(userName)!=null){
-            return false;
-        }
-        ParkingUser user = new ParkingUser();
-        user.setUserName(userName);
-        user.setPassWord(toMd5(passWord));
-        userDao.save(user);
-        return true;
     }
     private static String toMd5(String str) {
         return DigestUtils.md5Hex(str);
     }
-
 }
