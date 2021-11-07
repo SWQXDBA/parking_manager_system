@@ -8,22 +8,36 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.sql.Timestamp;
-
+/**
+ * 租赁申请 用户发起一个申请 需要管理员批准
+ * @author SWQXDBA
+ */
 @Data
 @Entity
 public class RentApply {
     @Id
     Long id;
-    //发起申请的用户
+    /**
+     * 发起申请的用户
+     */
     @ManyToOne
     ParkingUser applyUser;
     //想要租借的停车场
 
-    //租借开始时间
+    /**
+     *  租借开始时间
+     */
+
     Timestamp startRentTime;
-    //租借停止时间
+
+    /**
+     * 租借停止时间
+     */
     Timestamp endRentTime;
 
+    /**
+     *  想要租赁的停车位
+     */
     @ManyToOne
     ParkingSpace targetParkingSpace;
 

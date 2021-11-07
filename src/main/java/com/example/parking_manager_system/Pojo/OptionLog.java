@@ -7,6 +7,10 @@ import org.hibernate.annotations.UpdateTimestamp;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+/**
+ * 管理员的操作日志
+ * @author SWQXDBA
+ */
 @Data
 @Entity
 public class OptionLog {
@@ -15,6 +19,11 @@ public class OptionLog {
     Long id;
     @ManyToOne
     AdminUser adminUser;
+
+
+    String data;
+
+
     @CreationTimestamp
     Timestamp createTime;
     @UpdateTimestamp

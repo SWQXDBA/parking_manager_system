@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.util.Set;
 
 /**
+ * 管理员
  * @author SWQXDBA
  */
 @Data
