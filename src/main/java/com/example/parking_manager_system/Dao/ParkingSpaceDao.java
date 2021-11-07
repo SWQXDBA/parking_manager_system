@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface SpaceDao extends CrudRepository<ParkingSpace,Long> {
+public interface ParkingSpaceDao extends CrudRepository<ParkingSpace,Long> {
     List<ParkingSpace> getParkingSpacesByZone(String Zone);
     List<ParkingSpace> getParkingSpacesByLeaseholder(ParkingUser Leaseholder);
 }

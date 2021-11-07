@@ -1,6 +1,6 @@
 package com.example.parking_manager_system;
 
-import com.example.parking_manager_system.Dao.SpaceDao;
+import com.example.parking_manager_system.Dao.ParkingSpaceDao;
 import com.example.parking_manager_system.Pojo.ParkingSpace;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ParkingManagerSystemApplicationTests {
 
     @Autowired
-    SpaceDao spaceDao;
+    ParkingSpaceDao spaceDao;
     @Test
     void contextLoads() {
         ParkingSpace space = new ParkingSpace();
@@ -26,8 +26,5 @@ class ParkingManagerSystemApplicationTests {
             space.setIdInZone("002");
             spaceDao.save(space);
         }
-
-
-
     }
 }

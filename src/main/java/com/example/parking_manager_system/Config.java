@@ -12,7 +12,7 @@ public class Config implements WebMvcConfigurer {
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
 
-        configurer.addPathPrefix("api", c -> true);
+//        configurer.addPathPrefix("api", c -> true);
     }
 
     @Autowired
@@ -20,8 +20,8 @@ public class Config implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(userInterceptor).addPathPatterns("/api/**")
-                .excludePathPatterns("/api/login/**").excludePathPatterns("/api/register/**");
+        registry.addInterceptor(userInterceptor).addPathPatterns("/**")
+                .excludePathPatterns("/user/login/**").excludePathPatterns("/user/register/**");
 
 
 //        registry.addInterceptor(adminInterceptor()).addPathPatterns("/api/Admin/**");

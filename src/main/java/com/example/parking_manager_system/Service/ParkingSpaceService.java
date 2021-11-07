@@ -1,6 +1,6 @@
 package com.example.parking_manager_system.Service;
 
-import com.example.parking_manager_system.Dao.SpaceDao;
+import com.example.parking_manager_system.Dao.ParkingSpaceDao;
 import com.example.parking_manager_system.Pojo.ParkingSpace;
 import com.example.parking_manager_system.Pojo.ParkingUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,9 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Service
-public class SpaceService {
+public class ParkingSpaceService {
     @Autowired
-    SpaceDao spaceDao;
+    ParkingSpaceDao spaceDao;
 
     /**
      * 出租停车场 如果想要出租的停车场已经有所有者 所有者不是新的承租人 并且租期还没结束 则返回false

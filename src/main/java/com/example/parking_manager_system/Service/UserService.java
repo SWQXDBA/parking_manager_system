@@ -56,7 +56,6 @@ public class UserService {
         if(userDao.getParkingUserByUserName(userName)!=null){
             return false;
         }
-
         ParkingUser user = new ParkingUser();
         user.setUserName(userName);
         user.setPassWord(toMd5(passWord));
