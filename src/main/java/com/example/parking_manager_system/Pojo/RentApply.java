@@ -4,9 +4,7 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.sql.Timestamp;
 /**
  * 租赁申请 用户发起一个申请 需要管理员批准
@@ -16,6 +14,7 @@ import java.sql.Timestamp;
 @Entity
 public class RentApply {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     /**
      * 发起申请的用户

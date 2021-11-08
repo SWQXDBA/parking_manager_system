@@ -53,11 +53,12 @@ public class AdminController {
         log.setAdminUser(user);
         log.setData("管理员批准了用户申请  "+rentApply);
 
+        rentApplyService.deleteRentApply(rentApply);
         optionLogService.save(log);
      /*   if (!parkingSpaceService.rentOut(user,parkingSpace,startTime,endTime)) {
             return AjaxResult.error("租借失败!请检查目标车位是否已有主人");
         }*/
-        return AjaxResult.success("申请已提交");
+        return AjaxResult.success("批准成功!");
     }
 
     @RequestMapping(value = "login",method = RequestMethod.POST)
@@ -70,4 +71,5 @@ public class AdminController {
         response.addCookie(new Cookie("token",token));
         return AjaxResult.success();
     }
+
 }

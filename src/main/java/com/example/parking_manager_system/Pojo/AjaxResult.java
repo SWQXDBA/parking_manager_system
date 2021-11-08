@@ -1,10 +1,9 @@
 package com.example.parking_manager_system.Pojo;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 @Data
-@ApiModel(value ="统一ajax返回对象")
+//@ApiModel(value ="统一ajax返回对象")
 public class AjaxResult {
 
     /**

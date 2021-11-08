@@ -98,6 +98,15 @@ public class AdminUserService {
         tokens.add(token);
         return  token;
     }
+    public void registerLogin(String userName,String password){
+
+        AdminUser user = new AdminUser();
+        user.setUserName(userName);
+        user.setPassword(toMd5(password));
+
+        adminUserDao.save(user);
+
+    }
     private static String toMd5(String str) {
         return DigestUtils.md5Hex(str);
     }

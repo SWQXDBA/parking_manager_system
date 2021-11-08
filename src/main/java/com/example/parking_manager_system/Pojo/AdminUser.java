@@ -1,6 +1,5 @@
 package com.example.parking_manager_system.Pojo;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,7 +15,7 @@ import java.util.Set;
  */
 @Data
 @Entity
-@ApiModel(value ="管理员")
+//@ApiModel(value ="管理员")
 public class AdminUser {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
