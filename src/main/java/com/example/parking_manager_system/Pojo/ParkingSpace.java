@@ -29,4 +29,10 @@ public class ParkingSpace {
     Timestamp createTime;
     @UpdateTimestamp
     Timestamp updateTime;
+
+    @Override
+    public String toString() {
+        return  zone +
+                "区" + idInZone +"号车位";
+    }
 }

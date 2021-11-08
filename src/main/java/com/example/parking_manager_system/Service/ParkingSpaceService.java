@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ParkingSpaceService {
@@ -15,16 +16,16 @@ public class ParkingSpaceService {
     ParkingSpaceDao spaceDao;
 
     /**
-     * 出租停车场 如果想要出租的停车场已经有所有者 所有者不是新的承租人 并且租期还没结束 则返回false
+     * 出租停车场
      * @param user
      * @param space
      * @param from
      * @param to
      * @return
      */
-    public boolean rentOut(ParkingUser user, ParkingSpace space, Timestamp from, Timestamp to){
-        ParkingUser oldOwner = space.getLeaseholder();
-        //已经有承租人
+    public void rentOut(ParkingUser user, ParkingSpace space, Timestamp from, Timestamp to){
+  /*         ParkingUser oldOwner = space.getLeaseholder();
+     //已经有承租人
         if(oldOwner!=null){
             //旧的承租人不等于新的承租人
             if(!oldOwner.getId().equals(user.getId())){
@@ -33,12 +34,19 @@ public class ParkingSpaceService {
                     return false;
                 }
             }
-        }
+        }*/
         space.setStartLeaseTime(from);
         space.setExpirationTime(to);
         space.setLeaseholder(user);
         spaceDao.save(space);
-        return true;
+    }
+    public ParkingSpace getSpaceById(long id){
+        Optional<ParkingSpace> optional = spaceDao.findById(id);
+        if(optional.isEmpty()){
+            return null;
+        }
+
+        return optional.get();
     }
 
     /**

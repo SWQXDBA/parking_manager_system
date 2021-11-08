@@ -1,20 +1,22 @@
 package com.example.parking_manager_system.Service;
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.parking_manager_system.Dao.AdminUserDao;
 import com.example.parking_manager_system.Model.JWTHelper;
 import com.example.parking_manager_system.Pojo.AdminUser;
-import com.example.parking_manager_system.Pojo.ParkingUser;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.util.WebUtils;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -49,6 +51,28 @@ public class AdminUserService {
         return true;
 
     }
+
+    public AdminUser getUserByRequest(HttpServletRequest request) {
+        try{
+            Cookie tokenCookie = WebUtils.getCookie(request, "token");
+            if(tokenCookie==null){
+                return null;
+            }
+            String token = tokenCookie.getValue();
+            DecodedJWT decode = jwtHelper.decode(token);
+            Long userId = decode.getClaim("userId").asLong();
+
+            Optional<AdminUser> optional = adminUserDao.findById(userId);
+            if (optional.isEmpty()) {
+                return null;
+            }
+            return optional.get();
+        }catch (Exception e){
+            return null;
+        }
+
+    }
+
     /**
      * 进行登录验证 成功后返回一个新的token
      * @param userName

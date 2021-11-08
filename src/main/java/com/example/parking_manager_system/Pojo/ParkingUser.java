@@ -28,4 +28,10 @@ public class ParkingUser {
     Timestamp createTime;
     @UpdateTimestamp
     Timestamp updateTime;
+
+    @Override
+    public String toString() {
+        return "用户名" + userName +
+                ", 联系方式" + phoneNumber ;
+    }
 }

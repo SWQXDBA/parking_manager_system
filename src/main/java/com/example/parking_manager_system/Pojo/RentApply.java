@@ -45,4 +45,11 @@ public class RentApply {
     Timestamp createTime;
     @UpdateTimestamp
     Timestamp updateTime;
+
+    @Override
+    public String toString() {
+        return
+                "申请用户: " + applyUser +
+                ", 目标停车位: " + targetParkingSpace ;
+    }
 }
