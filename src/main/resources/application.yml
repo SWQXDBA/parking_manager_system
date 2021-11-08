@@ -9,6 +9,11 @@ spring:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/parking
     username: root
     password: q12345
+  jackson:
+    #配置时间格式化 前端传过来的时候根据这个格式timestamp
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
 
 authKey: 123!@
 debug: true
+

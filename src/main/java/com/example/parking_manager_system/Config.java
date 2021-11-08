@@ -25,7 +25,7 @@ public class Config implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         //添加对用户的拦截
-        registry.addInterceptor(userInterceptor).addPathPatterns("/**")
+        registry.addInterceptor(userInterceptor).addPathPatterns("/user")
                 .excludePathPatterns("/user/login/**").excludePathPatterns("/user/register/**");
 
         //添加对管理员的拦截

@@ -5,9 +5,12 @@ import com.example.parking_manager_system.Pojo.AjaxResult;
 import com.example.parking_manager_system.Pojo.OptionLog;
 import com.example.parking_manager_system.Pojo.RentApply;
 import com.example.parking_manager_system.Service.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("admin")
 @Slf4j
+@Api("管理员接口")
 public class AdminController {
     @Autowired
     AdminUserService adminUserService;
@@ -30,7 +34,8 @@ public class AdminController {
     OptionLogService optionLogService;
     @Autowired
     ParkingSpaceService parkingSpaceService;
-    @RequestMapping("admit")
+    @RequestMapping(value = "admit",method = RequestMethod.POST)
+    @ApiOperation(value="批准租借请求", notes="批准用户的租借请求" ,httpMethod="POST")
     public AjaxResult rent(@RequestParam(name = "applyId") long rentApplyId,
                            HttpServletRequest request) {
         AdminUser user = adminUserService.getUserByRequest(request);
@@ -54,7 +59,9 @@ public class AdminController {
         }*/
         return AjaxResult.success("申请已提交");
     }
-    @RequestMapping("login")
+
+    @RequestMapping(value = "login",method = RequestMethod.POST)
+    @ApiOperation(value="管理员登录", notes="管理员登录" ,httpMethod="POST")
     public AjaxResult adminlogin(@RequestParam(name = "username") String userName, @RequestParam(name = "password") String password , HttpServletResponse response){
         String token = adminUserService.adminLogin(userName, password);
         if(token==null){

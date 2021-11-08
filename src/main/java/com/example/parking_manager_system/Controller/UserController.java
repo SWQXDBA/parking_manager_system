@@ -8,9 +8,11 @@ import com.example.parking_manager_system.Service.AdminUserService;
 import com.example.parking_manager_system.Service.ParkingSpaceService;
 import com.example.parking_manager_system.Service.RentApplyService;
 import com.example.parking_manager_system.Service.UserService;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +34,8 @@ public class UserController {
 
     @Autowired
     ParkingSpaceService parkingSpaceService;
-    @RequestMapping("rent")
+    @RequestMapping(value = "rent",method = RequestMethod.POST)
+    @ApiOperation(value="用户发起租借请求", notes="用户发起租借请求" ,httpMethod="POST")
     public AjaxResult rent(@RequestParam(name = "parkId") long targetId, @RequestParam(name = "startTime") Timestamp startTime, @RequestParam(name = "endTime") Timestamp endTime,
                            HttpServletRequest request) {
         ParkingUser user = userService.getUserByRequest(request);
@@ -55,8 +58,8 @@ public class UserController {
         }*/
         return AjaxResult.success("申请已提交");
     }
-
-    @RequestMapping("login")
+    @RequestMapping(value = "login",method = RequestMethod.POST)
+    @ApiOperation(value="用户登录", notes="用户登录" ,httpMethod="POST")
     public AjaxResult login(@RequestParam(name = "username") String userName, @RequestParam(name = "password") String password , HttpServletResponse response){
         String token = userService.login(userName, password);
         if(token==null){
@@ -67,8 +70,9 @@ public class UserController {
     }
 
 
+    @RequestMapping(value = "register",method = RequestMethod.POST)
+    @ApiOperation(value="用户注册", notes="用户注册" ,httpMethod="POST")
 
-    @RequestMapping("register")
     public AjaxResult register(@RequestParam(name = "username") String userName, @RequestParam(name = "password") String password , HttpServletResponse response){
 
         if( !userService.register(userName, password)){

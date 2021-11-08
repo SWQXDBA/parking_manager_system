@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,13 +19,14 @@ public class ParkingSpaceService {
 
     /**
      * 出租停车场
+     *
      * @param user
      * @param space
      * @param from
      * @param to
      * @return
      */
-    public void rentOut(ParkingUser user, ParkingSpace space, Timestamp from, Timestamp to){
+    public void rentOut(ParkingUser user, ParkingSpace space, Timestamp from, Timestamp to) {
   /*         ParkingUser oldOwner = space.getLeaseholder();
      //已经有承租人
         if(oldOwner!=null){
@@ -40,9 +43,10 @@ public class ParkingSpaceService {
         space.setLeaseholder(user);
         spaceDao.save(space);
     }
-    public ParkingSpace getSpaceById(long id){
+
+    public ParkingSpace getSpaceById(long id) {
         Optional<ParkingSpace> optional = spaceDao.findById(id);
-        if(optional.isEmpty()){
+        if (optional.isEmpty()) {
             return null;
         }
 
@@ -51,14 +55,19 @@ public class ParkingSpaceService {
 
     /**
      * 根据停车场分区 获取该区域的所有停车场
+     *
      * @param zoneName
      * @return
      */
-    public List<ParkingSpace> getSpacesByZone(String zoneName){
+    public List<ParkingSpace> getSpacesByZone(String zoneName) {
         return spaceDao.getParkingSpacesByZone(zoneName);
     }
 
-    public List<ParkingSpace>  getSpaceByUser(ParkingUser user){
+    public List<ParkingSpace> getAllSpaces() {
+        return new ArrayList<>((Collection<? extends ParkingSpace>) spaceDao.findAll());
+    }
+
+    public List<ParkingSpace> getSpaceByUser(ParkingUser user) {
         return spaceDao.getParkingSpacesByLeaseholder(user);
     }
 }
