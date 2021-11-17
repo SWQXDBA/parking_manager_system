@@ -63,8 +63,19 @@ public class ParkingSpaceService {
         return spaceDao.getParkingSpacesByZone(zoneName);
     }
 
-    public List<ParkingSpace> getAllSpaces() {
-        return new ArrayList<>((Collection<? extends ParkingSpace>) spaceDao.findAll());
+    //去除了所有者的密码等信息
+    public List<ParkingSpace> getAllSpacesSaveData() {
+        List<ParkingSpace> parkingSpaces = new ArrayList<>((Collection<? extends ParkingSpace>) spaceDao.findAll());
+        for (ParkingSpace parkingSpace : parkingSpaces) {
+            ParkingUser leaseholder = parkingSpace.getLeaseholder();
+            if(leaseholder!=null){
+                ParkingUser replaceForSave = new ParkingUser();
+                replaceForSave.setUserName(leaseholder.getUserName());
+                parkingSpace.setLeaseholder(replaceForSave);
+            }
+
+        }
+        return parkingSpaces;
     }
 
     public List<ParkingSpace> getSpaceByUser(ParkingUser user) {

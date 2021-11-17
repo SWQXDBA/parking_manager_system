@@ -18,10 +18,10 @@ public class ParkingSpaceController {
 
     @Autowired
     ParkingSpaceService parkingSpaceService;
-    @RequestMapping(value = "getAll",method = RequestMethod.GET)
-    @ApiOperation(value="获取所有停车位", notes="获取所有停车位" ,httpMethod="GET")
+    @RequestMapping(value = "getAll",method = RequestMethod.POST)
+    @ApiOperation(value="获取所有停车位", notes="获取所有停车位" ,httpMethod="POST")
     public List<ParkingSpace> getAll() {
-        return parkingSpaceService.getAllSpaces();
+        return parkingSpaceService.getAllSpacesSaveData();
     }
 
 }

@@ -7,6 +7,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @SpringBootTest
 class ParkingManagerSystemApplicationTests {
 
@@ -33,5 +36,28 @@ class ParkingManagerSystemApplicationTests {
     @Test
     void adm() {
         adminUserService.registerLogin("root","root");
+    }
+    @Test
+    void addp() {
+        List<ParkingSpace> list = new ArrayList<>();
+        for (int i = 1; i <= 30; i++) {
+            ParkingSpace space = new ParkingSpace();
+            space.setZone("A");
+            space.setIdInZone(""+i);
+            list.add(space);
+        }
+        for (int i = 1; i <= 50; i++) {
+            ParkingSpace space = new ParkingSpace();
+            space.setZone("B");
+            space.setIdInZone(""+i);
+            list.add(space);
+        }
+        for (int i = 1; i <= 25; i++) {
+            ParkingSpace space = new ParkingSpace();
+            space.setZone("C");
+            space.setIdInZone(""+i);
+            list.add(space);
+        }
+        spaceDao.saveAll(list);
     }
 }

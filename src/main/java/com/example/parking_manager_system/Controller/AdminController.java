@@ -47,6 +47,7 @@ public class AdminController {
             return AjaxResult.error("要审批的租借请求未找到");
         }
 
+
         parkingSpaceService.rentOut(rentApply.getApplyUser(),rentApply.getTargetParkingSpace(),rentApply.getStartRentTime(),rentApply.getEndRentTime());
 
         OptionLog log = new OptionLog();

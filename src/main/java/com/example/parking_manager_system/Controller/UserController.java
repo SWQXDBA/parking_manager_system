@@ -11,10 +11,7 @@ import com.example.parking_manager_system.Service.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -60,15 +57,29 @@ public class UserController {
     }
     @RequestMapping(value = "login",method = RequestMethod.POST)
     @ApiOperation(value="用户登录", notes="用户登录" ,httpMethod="POST")
-    public AjaxResult login(@RequestParam(name = "username") String userName, @RequestParam(name = "password") String password , HttpServletResponse response){
-        String token = userService.login(userName, password);
+    public AjaxResult login(@RequestBody ParkingUser user, HttpServletResponse response){
+
+        String token = userService.login(user.getUserName(), user.getPassWord());
         if(token==null){
             return AjaxResult.error("用户名或密码错误");
         }
         response.addCookie(new Cookie("token",token));
         return AjaxResult.success();
     }
-
+/*
+    @RequestMapping(value = "login",method = RequestMethod.POST)
+    @ApiOperation(value="用户登录", notes="用户登录" ,httpMethod="POST")
+    public AjaxResult login(@RequestBody Map<String,String> map, HttpServletResponse response){
+        log.error("userName:"+map.get("userName"));
+        log.error("password:"+map.get("passWord"));
+        String token = userService.login(map.get("userName"), map.get("passWord"));
+        if(token==null){
+            return AjaxResult.error("用户名或密码错误");
+        }
+        response.addCookie(new Cookie("token",token));
+        return AjaxResult.success();
+    }
+*/
 
     @RequestMapping(value = "register",method = RequestMethod.POST)
     @ApiOperation(value="用户注册", notes="用户注册" ,httpMethod="POST")
