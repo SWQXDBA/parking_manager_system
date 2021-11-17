@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("parkingSpace")
@@ -24,11 +24,9 @@ public class ParkingSpaceController {
     @ApiOperation(value="获取所有停车位", notes="获取所有停车位" ,httpMethod="POST")
     public List<ParkingSpaceViewModel> getAll() {
         List<ParkingSpace> entities = parkingSpaceService.getAllSpacesSaveData();
-        List<ParkingSpaceViewModel> viewModels = new ArrayList<>();
-        for (ParkingSpace entity : entities) {
-            viewModels.add(entity.getViewModel()) ;
-        }
-        return viewModels;
+
+
+        return entities.stream().map(ParkingSpace::getViewModel).collect(Collectors.toList());
     }
 
 }
