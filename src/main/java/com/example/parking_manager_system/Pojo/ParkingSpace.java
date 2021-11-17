@@ -46,7 +46,9 @@ public class ParkingSpace {
     public ParkingSpaceViewModel getViewModel(){
         ParkingSpaceViewModel m = new ParkingSpaceViewModel();
         m.id=id;
-        m.leaseholder= leaseholder.getViewModel();
+        if(leaseholder!=null){
+            m.leaseholder= leaseholder.getViewModel();
+        }
         m.idInZone=idInZone;
         m.zone=zone;
         m.startLeaseTime=startLeaseTime;

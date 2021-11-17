@@ -33,7 +33,7 @@ public class UserController {
     ParkingSpaceService parkingSpaceService;
     @RequestMapping(value = "rent",method = RequestMethod.POST)
     @ApiOperation(value="用户发起租借请求", notes="用户发起租借请求" ,httpMethod="POST")
-    public AjaxResult rent(@RequestParam(name = "parkId") long targetId, @RequestParam(name = "startTime") Timestamp startTime, @RequestParam(name = "endTime") Timestamp endTime,
+    public AjaxResult rent(@RequestParam(name = "parkId") long targetId,  Timestamp startRentTime,  Timestamp endRentTime,
                            HttpServletRequest request) {
         ParkingUser user = userService.getUserByRequest(request);
         if(user==null){
@@ -46,8 +46,8 @@ public class UserController {
 
         RentApply rentApply = new RentApply();
         rentApply.setApplyUser(user);
-        rentApply.setStartRentTime(startTime);
-        rentApply.setEndRentTime(endTime);
+        rentApply.setStartRentTime(startRentTime);
+        rentApply.setEndRentTime(endRentTime);
         rentApply.setTargetParkingSpace(parkingSpace);
         rentApplyService.applyRent(rentApply);
      /*   if (!parkingSpaceService.rentOut(user,parkingSpace,startTime,endTime)) {
@@ -63,7 +63,10 @@ public class UserController {
         if(token==null){
             return AjaxResult.error("用户名或密码错误");
         }
-        response.addCookie(new Cookie("token",token));
+        Cookie cookie = new Cookie("token", token);
+        cookie.setPath("/");//所有访问都应该带上这个cookie
+
+        response.addCookie(cookie);
         return AjaxResult.success();
     }
 /*
