@@ -1,5 +1,6 @@
 package com.example.parking_manager_system.Pojo;
 
+import com.example.parking_manager_system.ModelView.ParkingUserViewModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -40,5 +41,11 @@ public class ParkingUser {
     public String toString() {
         return "用户名" + userName +
                 ", 联系方式" + phoneNumber ;
+    }
+    public ParkingUserViewModel getViewModel(){
+        ParkingUserViewModel m = new ParkingUserViewModel();
+        m.userName=userName;
+        m.phoneNumber=phoneNumber;
+        return m;
     }
 }

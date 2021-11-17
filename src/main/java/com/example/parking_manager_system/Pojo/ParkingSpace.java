@@ -1,5 +1,6 @@
 package com.example.parking_manager_system.Pojo;
 
+import com.example.parking_manager_system.ModelView.ParkingSpaceViewModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -41,5 +42,16 @@ public class ParkingSpace {
     public String toString() {
         return  zone +
                 "区" + idInZone +"号车位";
+    }
+    public ParkingSpaceViewModel getViewModel(){
+        ParkingSpaceViewModel m = new ParkingSpaceViewModel();
+        m.id=id;
+        m.leaseholder= leaseholder.getViewModel();
+        m.idInZone=idInZone;
+        m.zone=zone;
+        m.startLeaseTime=startLeaseTime;
+        m.expirationTime=expirationTime;
+
+        return m;
     }
 }
