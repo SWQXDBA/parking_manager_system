@@ -8,13 +8,15 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+/**
+ * @author SWQXDBA
+ */
 @Configuration
 public class Config implements WebMvcConfigurer {
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
-
-//        configurer.addPathPrefix("api", c -> true);
+//        configurer.addPathPrefix("/", c -> true);
     }
 
     @Autowired
@@ -24,12 +26,13 @@ public class Config implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+
         //添加对用户的拦截
-        registry.addInterceptor(userInterceptor).addPathPatterns("/user")
+        registry.addInterceptor(userInterceptor).addPathPatterns("/user/**")
                 .excludePathPatterns("/user/login/**").excludePathPatterns("/user/register/**");
 
         //添加对管理员的拦截
-        registry.addInterceptor(adminInterceptor).addPathPatterns("/admin")
+        registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/login/**").excludePathPatterns("/admin/register/**");
 
 

@@ -36,7 +36,7 @@ public class AdminController {
     ParkingSpaceService parkingSpaceService;
     @RequestMapping(value = "admit",method = RequestMethod.POST)
     @ApiOperation(value="批准租借请求", notes="批准用户的租借请求" ,httpMethod="POST")
-    public AjaxResult rent(@RequestParam(name = "applyId") long rentApplyId,
+    public AjaxResult admitRent(@RequestParam(name = "applyId") long rentApplyId,
                            HttpServletRequest request) {
         AdminUser user = adminUserService.getUserByRequest(request);
         if(user==null){

@@ -27,6 +27,8 @@ public class UserInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        //System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+
         Cookie tokenCookie = WebUtils.getCookie(request, "token");
         if(tokenCookie==null){
             return false;

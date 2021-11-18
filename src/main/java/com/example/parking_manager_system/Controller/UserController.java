@@ -1,5 +1,6 @@
 package com.example.parking_manager_system.Controller;
 
+import com.example.parking_manager_system.ModelView.AdminAdmitRentApplyRequestViewModel;
 import com.example.parking_manager_system.Pojo.AjaxResult;
 import com.example.parking_manager_system.Pojo.ParkingSpace;
 import com.example.parking_manager_system.Pojo.ParkingUser;
@@ -16,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Timestamp;
-import java.util.Map;
 
 @RestController
 @RequestMapping("user")
@@ -35,7 +34,7 @@ public class UserController {
     @RequestMapping(value = "rent",method = RequestMethod.POST)
 
     @ApiOperation(value="用户发起租借请求", notes="用户发起租借请求" ,httpMethod="POST")
-    public AjaxResult rent(@RequestBody ParkingSpace space,
+    public AjaxResult rent(@RequestBody AdminAdmitRentApplyRequestViewModel model,
                            HttpServletRequest request) {
 
 
@@ -43,20 +42,19 @@ public class UserController {
         if(user==null){
             return AjaxResult.error("用户未登录或者token已过期");
         }
-        System.out.println("idInZone++++"+space.getZone()+space.getIdInZone());
-        System.out.println("startRentTime"+space.getStartLeaseTime());
-        ParkingSpace parkingSpace = parkingSpaceService.getSpaceByInZoneAndZone(space.getIdInZone(),space.getZone());
+
+        ParkingSpace parkingSpace = parkingSpaceService.getSpaceByInZoneAndZone(model.idInZone,model.zone);
         if(parkingSpace==null){
             return AjaxResult.error("未找到目标车位");
         }
 
         RentApply rentApply = new RentApply();
         rentApply.setApplyUser(user);
-        rentApply.setStartRentTime(space.getStartLeaseTime());
-        rentApply.setEndRentTime(space.getExpirationTime());
+        rentApply.setStartRentTime(model.startLeaseTime);
+        rentApply.setEndRentTime(model.expirationTime);
         rentApply.setTargetParkingSpace(parkingSpace);
         rentApplyService.applyRent(rentApply);
-        parkingSpaceService.rentOut(user,parkingSpace,space.getStartLeaseTime(),space.getExpirationTime());
+
         return AjaxResult.success("申请已提交");
     }
     @RequestMapping(value = "login",method = RequestMethod.POST)
