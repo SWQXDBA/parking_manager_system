@@ -88,7 +88,7 @@ public class AdminUserService {
         }
         Calendar calendar=  Calendar.getInstance();
 
-        calendar.add(Calendar.MINUTE,30);//设置过期时间
+        calendar.add(Calendar.MINUTE,300);//设置过期时间
         String token = JWT.create()
                 .withClaim("userId", user.getId())//传递的消息 这个是明文的 不应该存放敏感信息如密码等
                 .withClaim("userName", user.getUserName())

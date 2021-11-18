@@ -5,6 +5,9 @@ import com.example.parking_manager_system.Pojo.RentApply;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -23,5 +26,8 @@ public class RentApplyService {
     }
     public void deleteRentApply(RentApply rentApply){
         rentApplyDao.delete(rentApply);
+    }
+    public List<RentApply> getAllRentBy(){
+        return  new ArrayList<>((Collection<? extends RentApply>) rentApplyDao.findAll());
     }
 }
