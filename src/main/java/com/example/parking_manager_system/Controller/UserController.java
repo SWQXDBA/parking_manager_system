@@ -17,6 +17,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
+import java.util.Map;
 
 @RestController
 @RequestMapping("user")
@@ -32,27 +33,30 @@ public class UserController {
     @Autowired
     ParkingSpaceService parkingSpaceService;
     @RequestMapping(value = "rent",method = RequestMethod.POST)
+
     @ApiOperation(value="用户发起租借请求", notes="用户发起租借请求" ,httpMethod="POST")
-    public AjaxResult rent(@RequestParam(name = "parkId") long targetId,  Timestamp startRentTime,  Timestamp endRentTime,
+    public AjaxResult rent(@RequestBody ParkingSpace space,
                            HttpServletRequest request) {
+
+
         ParkingUser user = userService.getUserByRequest(request);
         if(user==null){
             return AjaxResult.error("用户未登录或者token已过期");
         }
-        ParkingSpace parkingSpace = parkingSpaceService.getSpaceById(targetId);
+        System.out.println("idInZone++++"+space.getZone()+space.getIdInZone());
+        System.out.println("startRentTime"+space.getStartLeaseTime());
+        ParkingSpace parkingSpace = parkingSpaceService.getSpaceByInZoneAndZone(space.getIdInZone(),space.getZone());
         if(parkingSpace==null){
             return AjaxResult.error("未找到目标车位");
         }
 
         RentApply rentApply = new RentApply();
         rentApply.setApplyUser(user);
-        rentApply.setStartRentTime(startRentTime);
-        rentApply.setEndRentTime(endRentTime);
+        rentApply.setStartRentTime(space.getStartLeaseTime());
+        rentApply.setEndRentTime(space.getExpirationTime());
         rentApply.setTargetParkingSpace(parkingSpace);
         rentApplyService.applyRent(rentApply);
-     /*   if (!parkingSpaceService.rentOut(user,parkingSpace,startTime,endTime)) {
-            return AjaxResult.error("租借失败!请检查目标车位是否已有主人");
-        }*/
+        parkingSpaceService.rentOut(user,parkingSpace,space.getStartLeaseTime(),space.getExpirationTime());
         return AjaxResult.success("申请已提交");
     }
     @RequestMapping(value = "login",method = RequestMethod.POST)

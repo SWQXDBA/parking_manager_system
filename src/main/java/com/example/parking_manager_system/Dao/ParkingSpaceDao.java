@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface ParkingSpaceDao extends CrudRepository<ParkingSpace,Long> {
     List<ParkingSpace> getParkingSpacesByZone(String Zone);
+    ParkingSpace getParkingSpacesByIdInZoneAndZone(String IdInZone,String Zone);
     List<ParkingSpace> getParkingSpacesByLeaseholder(ParkingUser Leaseholder);
 }

@@ -52,7 +52,10 @@ public class ParkingSpaceService {
 
         return optional.get();
     }
+    public ParkingSpace getSpaceByInZoneAndZone(String idInZone,String zone) {
 
+        return spaceDao.getParkingSpacesByIdInZoneAndZone(idInZone,zone);
+    }
     /**
      * 根据停车场分区 获取该区域的所有停车场
      *
