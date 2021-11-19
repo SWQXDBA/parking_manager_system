@@ -66,7 +66,7 @@ public class ParkingSpaceService {
         return spaceDao.getParkingSpacesByZone(zoneName);
     }
 
-    //去除了所有者的密码等信息
+
     public List<ParkingSpace> getAllSpacesSaveData() {
         return new ArrayList<>((Collection<? extends ParkingSpace>) spaceDao.findAll());
     }

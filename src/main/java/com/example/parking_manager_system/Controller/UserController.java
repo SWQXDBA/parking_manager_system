@@ -1,14 +1,8 @@
 package com.example.parking_manager_system.Controller;
 
 import com.example.parking_manager_system.ModelView.AdminAdmitRentApplyRequestViewModel;
-import com.example.parking_manager_system.Pojo.AjaxResult;
-import com.example.parking_manager_system.Pojo.ParkingSpace;
-import com.example.parking_manager_system.Pojo.ParkingUser;
-import com.example.parking_manager_system.Pojo.RentApply;
-import com.example.parking_manager_system.Service.AdminUserService;
-import com.example.parking_manager_system.Service.ParkingSpaceService;
-import com.example.parking_manager_system.Service.RentApplyService;
-import com.example.parking_manager_system.Service.UserService;
+import com.example.parking_manager_system.Pojo.*;
+import com.example.parking_manager_system.Service.*;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,20 +11,31 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.stream.Collectors;
 
+/**
+ * @author SWQXDBA
+ */
 @RestController
 @RequestMapping("user")
 @Slf4j
 public class UserController {
-    @Autowired
+
     AdminUserService adminUserService;
-    @Autowired
     UserService userService;
-    @Autowired
     RentApplyService rentApplyService;
+    OptionLogService optionLogService;
+    ParkingSpaceService parkingSpaceService;
 
     @Autowired
-    ParkingSpaceService parkingSpaceService;
+    public UserController(AdminUserService adminUserService, UserService userService, RentApplyService rentApplyService, OptionLogService optionLogService, ParkingSpaceService parkingSpaceService) {
+        this.adminUserService = adminUserService;
+        this.userService = userService;
+        this.rentApplyService = rentApplyService;
+        this.optionLogService = optionLogService;
+        this.parkingSpaceService = parkingSpaceService;
+    }
+
     @RequestMapping(value = "rent",method = RequestMethod.POST)
 
     @ApiOperation(value="用户发起租借请求", notes="用户发起租借请求" ,httpMethod="POST")
@@ -85,7 +90,28 @@ public class UserController {
         return AjaxResult.success();
     }
 */
+@RequestMapping(value = "getOptionLog",method = RequestMethod.POST)
+@ApiOperation(value="获取用户相关的所有日志", notes="获取用户相关的所有日志" ,httpMethod="POST")
+public AjaxResult getOptionLog(HttpServletRequest request) {
 
+    ParkingUser user = userService.getUserByRequest(request);
+    if(user==null){
+        return AjaxResult.error("用户未登录或者token已过期");
+    }
+
+
+
+    return AjaxResult.success(optionLogService
+            //查询出全部信息
+            .getAll()
+            .stream()
+            //过滤掉不是他的
+            .filter(o -> o.getData().contains( user.getUserName()))
+            //转换成视图模型
+            .map(OptionLog::getViewModel)
+            //转换成list
+            .collect(Collectors.toList()));
+}
     @RequestMapping(value = "register",method = RequestMethod.POST)
     @ApiOperation(value="用户注册", notes="用户注册" ,httpMethod="POST")
 

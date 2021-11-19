@@ -102,6 +102,15 @@ public class AdminController {
                 .collect(Collectors.toList()));
 
     }
+    @RequestMapping(value = "getAllOptionLog",method = RequestMethod.POST)
+    @ApiOperation(value="获取所有日志", notes="获取所有日志" ,httpMethod="POST")
+    public AjaxResult getAllOptionLog(HttpServletRequest request) {
+        AdminUser user = adminUserService.getUserByRequest(request);
+        if(user==null){
+            return AjaxResult.error("管理员未登录或者token已过期");
+        }
+        return AjaxResult.success(optionLogService.getAll().stream().map(OptionLog::getViewModel).collect(Collectors.toList()));
+    }
 
     @RequestMapping(value = "login",method = RequestMethod.POST)
     @ApiOperation(value="管理员登录", notes="管理员登录" ,httpMethod="POST")

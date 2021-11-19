@@ -1,5 +1,6 @@
 package com.example.parking_manager_system.Pojo;
 
+import com.example.parking_manager_system.ModelView.OptionLogResponseViewModel;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -28,4 +29,11 @@ public class OptionLog {
     Timestamp createTime;
     @UpdateTimestamp
     Timestamp updateTime;
+    public OptionLogResponseViewModel getViewModel(){
+        OptionLogResponseViewModel model = new OptionLogResponseViewModel();
+        model.adminUser = adminUser.getUserName();
+        model.createTime = createTime;
+        model.data = data;
+        return model;
+    }
 }
