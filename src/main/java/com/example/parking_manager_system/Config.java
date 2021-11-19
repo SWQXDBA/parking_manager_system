@@ -21,6 +21,7 @@ public class Config implements WebMvcConfigurer {
 
     @Autowired
     UserInterceptor userInterceptor;
+
     @Autowired
     AdminInterceptor adminInterceptor;
 
