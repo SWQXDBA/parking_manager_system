@@ -98,7 +98,7 @@ public class AdminUserService {
         tokens.add(token);
         return  token;
     }
-    public void registerLogin(String userName,String password){
+    public void register(String userName,String password){
 
         AdminUser user = new AdminUser();
         user.setUserName(userName);

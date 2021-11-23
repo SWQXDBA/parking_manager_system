@@ -1,6 +1,7 @@
 package com.example.parking_manager_system.Controller;
 
 import com.example.parking_manager_system.ModelView.AdminGetAllRentApplyResponseViewModel;
+import com.example.parking_manager_system.ModelView.AdminRegisterRequestViewModel;
 import com.example.parking_manager_system.Pojo.AdminUser;
 import com.example.parking_manager_system.Pojo.AjaxResult;
 import com.example.parking_manager_system.Pojo.OptionLog;
@@ -33,6 +34,18 @@ public class AdminController {
     OptionLogService optionLogService;
     @Autowired
     ParkingSpaceService parkingSpaceService;
+
+    @RequestMapping(value = "register",method = RequestMethod.GET)
+    @ApiOperation(value="批准租借请求", notes="批准用户的租借请求" ,httpMethod="GET")
+    public AjaxResult register(@RequestBody AdminRegisterRequestViewModel admin,
+                               HttpServletRequest request) {
+
+        adminUserService.register(admin.userName,admin.password);
+        return null;
+    }
+
+
+
     @RequestMapping(value = "admit",method = RequestMethod.GET)
     @ApiOperation(value="批准租借请求", notes="批准用户的租借请求" ,httpMethod="GET")
     public AjaxResult admitRent(@RequestParam(name = "applyId") long rentApplyId,
