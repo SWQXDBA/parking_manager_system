@@ -1,6 +1,7 @@
 package com.example.parking_manager_system.Controller;
 
 import com.example.parking_manager_system.ModelView.AdminAdmitRentApplyRequestViewModel;
+import com.example.parking_manager_system.ModelView.UserRegisterRequestViewModel;
 import com.example.parking_manager_system.Pojo.*;
 import com.example.parking_manager_system.Service.*;
 import io.swagger.annotations.ApiOperation;
@@ -115,12 +116,12 @@ public AjaxResult getOptionLog(HttpServletRequest request) {
     @RequestMapping(value = "register",method = RequestMethod.POST)
     @ApiOperation(value="用户注册", notes="用户注册" ,httpMethod="POST")
 
-    public AjaxResult register(@RequestParam(name = "username") String userName, @RequestParam(name = "password") String password , HttpServletResponse response){
+    public AjaxResult register(@RequestBody UserRegisterRequestViewModel user, HttpServletResponse response){
 
-        if( !userService.register(userName, password)){
-            return AjaxResult.error("用户名重复");
+        if( !userService.register(user.userName, user.password)){
+            return AjaxResult.error("用户名重复!");
         }
-        return AjaxResult.success();
+        return AjaxResult.success("注册成功!");
     }
 
 
