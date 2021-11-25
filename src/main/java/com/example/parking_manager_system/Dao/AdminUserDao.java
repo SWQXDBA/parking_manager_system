@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AdminUserDao extends CrudRepository<AdminUser,Long> {
     AdminUser getAdminUserByUserNameAndPassword(String UserName,String Password);
+    AdminUser getAdminUserByUserName(String UserName);
 }

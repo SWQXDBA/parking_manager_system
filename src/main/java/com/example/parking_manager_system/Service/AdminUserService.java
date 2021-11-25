@@ -30,6 +30,7 @@ public class AdminUserService {
     JWTHelper jwtHelper;
 
     Set<String> tokens = new HashSet<>();
+
     /**
      * 检查是否存在这个token以及token的有效性
      * @param token
@@ -98,13 +99,16 @@ public class AdminUserService {
         tokens.add(token);
         return  token;
     }
-    public void register(String userName,String password){
-
+    public boolean register(String userName,String password){
+        if(adminUserDao.getAdminUserByUserName(userName)!=null){
+            return false;
+        }
         AdminUser user = new AdminUser();
         user.setUserName(userName);
         user.setPassword(toMd5(password));
 
         adminUserDao.save(user);
+        return true;
 
     }
     private static String toMd5(String str) {

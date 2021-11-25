@@ -34,7 +34,7 @@ public class Config implements WebMvcConfigurer {
 
         //添加对管理员的拦截
         registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**")
-                .excludePathPatterns("/admin/login/**").excludePathPatterns("/admin/register/**");
+                .excludePathPatterns("/admin/login/**").excludePathPatterns("/admin/init");
 
 
 //        registry.addInterceptor(adminInterceptor()).addPathPatterns("/api/Admin/**");

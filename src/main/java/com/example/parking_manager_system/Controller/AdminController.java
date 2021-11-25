@@ -1,5 +1,6 @@
 package com.example.parking_manager_system.Controller;
 
+import com.example.parking_manager_system.Exceptions.UnLoginException;
 import com.example.parking_manager_system.ModelView.AdminGetAllRentApplyResponseViewModel;
 import com.example.parking_manager_system.ModelView.AdminRegisterRequestViewModel;
 import com.example.parking_manager_system.Pojo.AdminUser;
@@ -11,6 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -34,14 +36,34 @@ public class AdminController {
     OptionLogService optionLogService;
     @Autowired
     ParkingSpaceService parkingSpaceService;
+    @Value("${admin}")
+    String adminName;
+    @Value("${password}")
+    String password;
 
-    @RequestMapping(value = "register",method = RequestMethod.GET)
-    @ApiOperation(value="批准租借请求", notes="批准用户的租借请求" ,httpMethod="GET")
-    public AjaxResult register(@RequestBody AdminRegisterRequestViewModel admin,
-                               HttpServletRequest request) {
 
-        adminUserService.register(admin.userName,admin.password);
-        return null;
+
+    @RequestMapping(value = "init",method = RequestMethod.GET)
+    @ApiOperation(value="初始化管理员", notes="初始化管理员" ,httpMethod="GET")
+    public void init() {
+        adminUserService.register(adminName,password);
+    }
+    @RequestMapping(value = "addAdmin",method = RequestMethod.POST)
+    @ApiOperation(value="添加管理员", notes="添加管理员" ,httpMethod="POST")
+    public AjaxResult register(@RequestBody AdminRegisterRequestViewModel admin,HttpServletRequest request) throws UnLoginException {
+        AdminUser user = adminUserService.getUserByRequest(request);
+        if(user==null){
+            throw new UnLoginException();
+        }
+        if (!adminUserService.register(admin.userName,admin.password)) {
+            return AjaxResult.error("用户名重复!");
+        }
+        OptionLog log = new OptionLog();
+
+        log.setAdminUser(user);
+        log.setData("管理员"+user+" 新增了管理员:"+admin.userName);
+        optionLogService.save(log);
+        return AjaxResult.success("添加成功!");
     }
 
 

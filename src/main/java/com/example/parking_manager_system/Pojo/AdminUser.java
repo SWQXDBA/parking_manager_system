@@ -35,4 +35,9 @@ public class AdminUser {
     Timestamp createTime;
     @UpdateTimestamp
     Timestamp updateTime;
+
+    @Override
+    public String toString() {
+        return userName;
+    }
 }
