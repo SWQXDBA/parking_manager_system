@@ -16,7 +16,7 @@ public class Config implements WebMvcConfigurer {
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
-//        configurer.addPathPrefix("/", c -> true);
+       configurer.addPathPrefix("api", c -> true);
     }
 
     @Autowired
@@ -29,12 +29,12 @@ public class Config implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
 
         //添加对用户的拦截
-        registry.addInterceptor(userInterceptor).addPathPatterns("/user/**")
-                .excludePathPatterns("/user/login/**").excludePathPatterns("/user/register/**");
+        registry.addInterceptor(userInterceptor).addPathPatterns("api/user/**")
+                .excludePathPatterns("api/user/login/**").excludePathPatterns("api/user/register/**");
 
         //添加对管理员的拦截
-        registry.addInterceptor(adminInterceptor).addPathPatterns("/admin/**")
-                .excludePathPatterns("/admin/login/**").excludePathPatterns("/admin/init");
+        registry.addInterceptor(adminInterceptor).addPathPatterns("api/admin/**")
+                .excludePathPatterns("api/admin/login/**").excludePathPatterns("api/admin/init");
 
 
 //        registry.addInterceptor(adminInterceptor()).addPathPatterns("/api/Admin/**");

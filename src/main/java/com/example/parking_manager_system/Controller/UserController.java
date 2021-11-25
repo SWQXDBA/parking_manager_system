@@ -18,8 +18,9 @@ import java.util.stream.Collectors;
  * @author SWQXDBA
  */
 @RestController
-@RequestMapping("user")
+@RequestMapping("/user")
 @Slf4j
+@CrossOrigin
 public class UserController {
 
     AdminUserService adminUserService;
@@ -63,7 +64,7 @@ public class UserController {
 
         return AjaxResult.success("申请已提交");
     }
-    @RequestMapping(value = "login",method = RequestMethod.POST)
+    @RequestMapping(value = "login",method = {RequestMethod.POST})
     @ApiOperation(value="用户登录", notes="用户登录" ,httpMethod="POST")
     public AjaxResult login(@RequestBody ParkingUser user, HttpServletResponse response){
 

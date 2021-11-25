@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @RequestMapping("admin")
 @Slf4j
 @Api("管理员接口")
-
+//@CrossOrigin
 public class AdminController {
     @Autowired
     AdminUserService adminUserService;
@@ -47,7 +47,7 @@ public class AdminController {
     @Autowired
     ConfigurationPropertiesConfig config;
 
-    @RequestMapping(value = "init",method = RequestMethod.GET)
+    @RequestMapping(value = "init",method = {RequestMethod.GET})
     @ApiOperation(value="初始化管理员", notes="初始化管理员" ,httpMethod="GET")
     public void init() {
         adminUserService.register(config.getAdminName(),config.getPassword());
