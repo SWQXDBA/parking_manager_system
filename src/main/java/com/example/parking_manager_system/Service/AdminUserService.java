@@ -3,12 +3,14 @@ package com.example.parking_manager_system.Service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.parking_manager_system.ConfigurationPropertiesConfig;
 import com.example.parking_manager_system.Dao.AdminUserDao;
 import com.example.parking_manager_system.Model.JWTHelper;
 import com.example.parking_manager_system.Pojo.AdminUser;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.WebUtils;
 
@@ -20,15 +22,17 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
+
 public class AdminUserService {
     @Autowired
     AdminUserDao adminUserDao;
-    @Value("${authKey}")
-    String authKey;
+ //   @Value("${authKey}")
+   // String authKey;
 
     @Autowired
     JWTHelper jwtHelper;
-
+    @Autowired
+    ConfigurationPropertiesConfig config;
     Set<String> tokens = new HashSet<>();
 
     /**
@@ -94,7 +98,7 @@ public class AdminUserService {
                 .withClaim("userId", user.getId())//传递的消息 这个是明文的 不应该存放敏感信息如密码等
                 .withClaim("userName", user.getUserName())
                 .withExpiresAt(calendar.getTime())//设置过期时间
-                .sign(Algorithm.HMAC256(authKey));
+                .sign(Algorithm.HMAC256(config.getAuthKey()));
 
         tokens.add(token);
         return  token;

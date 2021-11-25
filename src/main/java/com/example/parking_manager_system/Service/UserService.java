@@ -3,6 +3,7 @@ package com.example.parking_manager_system.Service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.parking_manager_system.ConfigurationPropertiesConfig;
 import com.example.parking_manager_system.Dao.UserDao;
 import com.example.parking_manager_system.Model.JWTHelper;
 import com.example.parking_manager_system.Pojo.ParkingUser;
@@ -25,12 +26,13 @@ public class UserService {
     @Autowired
     UserDao userDao;
 
-    @Value("${authKey}")
-    String authKey;
+  /*  @Value("${authKey}")
+    String authKey;*/
 
     @Autowired
     JWTHelper jwtHelper;
-
+    @Autowired
+    ConfigurationPropertiesConfig config;
     Set<String> tokens = new HashSet<>();
 
     /**
@@ -96,7 +98,7 @@ public class UserService {
                 .withClaim("userId", user.getId())//传递的消息 这个是明文的 不应该存放敏感信息如密码等
                 .withClaim("userName", user.getUserName())
                 .withExpiresAt(calendar.getTime())//设置过期时间
-                .sign(Algorithm.HMAC256(authKey));
+                .sign(Algorithm.HMAC256(config.getAuthKey()));
 
         addToken(token);
         return  token;

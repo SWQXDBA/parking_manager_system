@@ -14,8 +14,11 @@ spring:
     time-zone: GMT+8
     date-format: yyyy-MM-dd HH:mm:ss
 
-authKey: 123!@
+
 debug: true
 #初始的管理员和密码
-admin: root6
-password: root6
+admin:
+  username: root
+  password: root
+  authKey: 123!@
+

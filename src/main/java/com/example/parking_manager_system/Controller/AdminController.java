@@ -1,5 +1,6 @@
 package com.example.parking_manager_system.Controller;
 
+import com.example.parking_manager_system.ConfigurationPropertiesConfig;
 import com.example.parking_manager_system.Exceptions.UnLoginException;
 import com.example.parking_manager_system.ModelView.AdminGetAllRentApplyResponseViewModel;
 import com.example.parking_manager_system.ModelView.AdminRegisterRequestViewModel;
@@ -13,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 @RequestMapping("admin")
 @Slf4j
 @Api("管理员接口")
+
 public class AdminController {
     @Autowired
     AdminUserService adminUserService;
@@ -36,17 +39,18 @@ public class AdminController {
     OptionLogService optionLogService;
     @Autowired
     ParkingSpaceService parkingSpaceService;
-    @Value("${admin}")
-    String adminName;
-    @Value("${password}")
-    String password;
+   // @Value("${admin}")
+    //String adminName;
+ //   @Value("${password}")
+   // String password;
 
-
+    @Autowired
+    ConfigurationPropertiesConfig config;
 
     @RequestMapping(value = "init",method = RequestMethod.GET)
     @ApiOperation(value="初始化管理员", notes="初始化管理员" ,httpMethod="GET")
     public void init() {
-        adminUserService.register(adminName,password);
+        adminUserService.register(config.getAdminName(),config.getPassword());
     }
     @RequestMapping(value = "addAdmin",method = RequestMethod.POST)
     @ApiOperation(value="添加管理员", notes="添加管理员" ,httpMethod="POST")

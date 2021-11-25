@@ -35,7 +35,7 @@ class ParkingManagerSystemApplicationTests {
     }
     @Test
     void adm() {
-        adminUserService.register("root","root");
+        //adminUserService.register("root","root");
     }
     @Test
     void addp() {
