@@ -46,11 +46,7 @@ public class ParkingSpaceService {
 
     public ParkingSpace getSpaceById(long id) {
         Optional<ParkingSpace> optional = spaceDao.findById(id);
-        if (optional.isEmpty()) {
-            return null;
-        }
-
-        return optional.get();
+        return optional.orElse(null);
     }
     public ParkingSpace getSpaceByInZoneAndZone(String idInZone,String zone) {
 

@@ -19,10 +19,7 @@ public class RentApplyService {
     }
     public RentApply getRentById(long id){
         Optional<RentApply> optional = rentApplyDao.findById(id);
-        if(optional.isEmpty()){
-            return null;
-        }
-        return optional.get();
+        return optional.orElse(null);
     }
     public void deleteRentApply(RentApply rentApply){
         rentApplyDao.delete(rentApply);

@@ -9,7 +9,6 @@ import com.example.parking_manager_system.Model.JWTHelper;
 import com.example.parking_manager_system.Pojo.ParkingUser;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.WebUtils;
 
@@ -66,9 +65,7 @@ public class UserService {
             Long userId = decode.getClaim("userId").asLong();
 
             Optional<ParkingUser> optional = userDao.findById(userId);
-            if (optional.isEmpty()) {
-                return null;
-            }
+
            return optional.get();
         }catch (Exception e){
             return null;
