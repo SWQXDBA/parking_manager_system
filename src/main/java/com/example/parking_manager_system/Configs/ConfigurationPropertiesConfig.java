@@ -1,4 +1,4 @@
-package com.example.parking_manager_system;
+package com.example.parking_manager_system.Configs;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

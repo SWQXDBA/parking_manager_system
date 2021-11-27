@@ -1,6 +1,6 @@
 package com.example.parking_manager_system.Controller;
 
-import com.example.parking_manager_system.ConfigurationPropertiesConfig;
+import com.example.parking_manager_system.Configs.ConfigurationPropertiesConfig;
 import com.example.parking_manager_system.Dao.ParkingSpaceDao;
 import com.example.parking_manager_system.Exceptions.UnLoginException;
 import com.example.parking_manager_system.ModelView.AdminGetAllRentApplyResponseViewModel;

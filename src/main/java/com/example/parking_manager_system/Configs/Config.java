@@ -1,4 +1,4 @@
-package com.example.parking_manager_system;
+package com.example.parking_manager_system.Configs;
 
 import com.example.parking_manager_system.Interceptor.AdminInterceptor;
 import com.example.parking_manager_system.Interceptor.UserInterceptor;

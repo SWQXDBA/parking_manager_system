@@ -3,7 +3,7 @@ package com.example.parking_manager_system.Service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.parking_manager_system.ConfigurationPropertiesConfig;
+import com.example.parking_manager_system.Configs.ConfigurationPropertiesConfig;
 import com.example.parking_manager_system.Dao.UserDao;
 import com.example.parking_manager_system.Model.JWTHelper;
 import com.example.parking_manager_system.Pojo.ParkingUser;
