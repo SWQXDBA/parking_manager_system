@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConfigurationPropertiesConfig {
     String authKey;
-    String adminName;
+    String username;
     String password;
 }
