@@ -51,23 +51,6 @@ public class AdminController {
     @ApiOperation(value="初始化管理员", notes="初始化管理员" ,httpMethod="GET")
     public void init() {
         adminUserService.register(config.getAdminName(),config.getPassword());
-    }
-    @RequestMapping(value = "addAdmin",method = RequestMethod.POST)
-    @ApiOperation(value="添加管理员", notes="添加管理员" ,httpMethod="POST")
-    public AjaxResult register(@RequestBody AdminRegisterRequestViewModel admin,HttpServletRequest request) throws UnLoginException {
-        AdminUser user = adminUserService.getUserByRequest(request);
-        if(user==null){
-            throw new UnLoginException();
-        }
-        if (!adminUserService.register(admin.userName,admin.password)) {
-            return AjaxResult.error("用户名重复!");
-        }
-        OptionLog log = new OptionLog();
-
-        log.setAdminUser(user);
-        log.setData("管理员"+user+" 新增了管理员:"+admin.userName);
-        optionLogService.save(log);
-
         List<ParkingSpace> list = new ArrayList<>();
         for (int i = 1; i <= 30; i++) {
             ParkingSpace space = new ParkingSpace();
@@ -88,6 +71,24 @@ public class AdminController {
             list.add(space);
         }
         spaceDao.saveAll(list);
+    }
+    @RequestMapping(value = "addAdmin",method = RequestMethod.POST)
+    @ApiOperation(value="添加管理员", notes="添加管理员" ,httpMethod="POST")
+    public AjaxResult register(@RequestBody AdminRegisterRequestViewModel admin,HttpServletRequest request) throws UnLoginException {
+        AdminUser user = adminUserService.getUserByRequest(request);
+        if(user==null){
+            throw new UnLoginException();
+        }
+        if (!adminUserService.register(admin.userName,admin.password)) {
+            return AjaxResult.error("用户名重复!");
+        }
+        OptionLog log = new OptionLog();
+
+        log.setAdminUser(user);
+        log.setData("管理员"+user+" 新增了管理员:"+admin.userName);
+        optionLogService.save(log);
+
+
 
         return AjaxResult.success("添加成功!");
     }
