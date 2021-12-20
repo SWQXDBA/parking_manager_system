@@ -36,8 +36,8 @@ public class ParkingSpaceController {
         return entities.stream().map(ParkingSpace::getViewModel).collect(Collectors.toList());
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.PUT)
-    @ApiOperation(value = "更新车位信息", notes = "编辑车位信息", httpMethod = "PUT")
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    @ApiOperation(value = "更新车位信息", notes = "编辑车位信息", httpMethod = "POST")
     public AjaxResult update(HttpServletRequest request,@RequestBody ParkingSpaceUpdateViewModel viewModel) {
         ParkingUser user = userService.getUserByRequest(request);
         if (user == null) {
