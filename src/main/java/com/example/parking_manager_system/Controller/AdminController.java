@@ -1,32 +1,30 @@
 package com.example.parking_manager_system.Controller;
 
-import com.example.parking_manager_system.ConfigurationPropertiesConfig;
+import com.example.parking_manager_system.Configs.ConfigurationPropertiesConfig;
+import com.example.parking_manager_system.Dao.ParkingSpaceDao;
 import com.example.parking_manager_system.Exceptions.UnLoginException;
 import com.example.parking_manager_system.ModelView.AdminGetAllRentApplyResponseViewModel;
 import com.example.parking_manager_system.ModelView.AdminRegisterRequestViewModel;
-import com.example.parking_manager_system.Pojo.AdminUser;
-import com.example.parking_manager_system.Pojo.AjaxResult;
-import com.example.parking_manager_system.Pojo.OptionLog;
-import com.example.parking_manager_system.Pojo.RentApply;
+import com.example.parking_manager_system.Pojo.*;
 import com.example.parking_manager_system.Service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("admin")
 @Slf4j
 @Api("管理员接口")
-//@CrossOrigin
+@CrossOrigin
 public class AdminController {
     @Autowired
     AdminUserService adminUserService;
@@ -46,11 +44,33 @@ public class AdminController {
 
     @Autowired
     ConfigurationPropertiesConfig config;
+    @Autowired
+    ParkingSpaceDao spaceDao;
 
     @RequestMapping(value = "init",method = {RequestMethod.GET})
     @ApiOperation(value="初始化管理员", notes="初始化管理员" ,httpMethod="GET")
     public void init() {
-        adminUserService.register(config.getAdminName(),config.getPassword());
+        adminUserService.register(config.getUsername(),config.getPassword());
+        List<ParkingSpace> list = new ArrayList<>();
+        for (int i = 1; i <= 30; i++) {
+            ParkingSpace space = new ParkingSpace();
+            space.setZone("A");
+            space.setIdInZone(""+i);
+            list.add(space);
+        }
+        for (int i = 1; i <= 50; i++) {
+            ParkingSpace space = new ParkingSpace();
+            space.setZone("B");
+            space.setIdInZone(""+i);
+            list.add(space);
+        }
+        for (int i = 1; i <= 25; i++) {
+            ParkingSpace space = new ParkingSpace();
+            space.setZone("C");
+            space.setIdInZone(""+i);
+            list.add(space);
+        }
+        spaceDao.saveAll(list);
     }
     @RequestMapping(value = "addAdmin",method = RequestMethod.POST)
     @ApiOperation(value="添加管理员", notes="添加管理员" ,httpMethod="POST")
@@ -67,6 +87,9 @@ public class AdminController {
         log.setAdminUser(user);
         log.setData("管理员"+user+" 新增了管理员:"+admin.userName);
         optionLogService.save(log);
+
+
+
         return AjaxResult.success("添加成功!");
     }
 

@@ -1,14 +1,6 @@
 package com.example.parking_manager_system;
 
-import com.example.parking_manager_system.Dao.ParkingSpaceDao;
-import com.example.parking_manager_system.Pojo.ParkingSpace;
-import com.example.parking_manager_system.Service.AdminUserService;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @SpringBootTest
 class ParkingManagerSystemApplicationTests {

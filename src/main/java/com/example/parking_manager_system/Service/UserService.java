@@ -3,13 +3,12 @@ package com.example.parking_manager_system.Service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.parking_manager_system.ConfigurationPropertiesConfig;
+import com.example.parking_manager_system.Configs.ConfigurationPropertiesConfig;
 import com.example.parking_manager_system.Dao.UserDao;
 import com.example.parking_manager_system.Model.JWTHelper;
 import com.example.parking_manager_system.Pojo.ParkingUser;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.WebUtils;
 
@@ -21,7 +20,6 @@ import java.util.Optional;
 import java.util.Set;
 
 @Service
-
 public class UserService {
     @Autowired
     UserDao userDao;
@@ -66,9 +64,7 @@ public class UserService {
             Long userId = decode.getClaim("userId").asLong();
 
             Optional<ParkingUser> optional = userDao.findById(userId);
-            if (optional.isEmpty()) {
-                return null;
-            }
+
            return optional.get();
         }catch (Exception e){
             return null;

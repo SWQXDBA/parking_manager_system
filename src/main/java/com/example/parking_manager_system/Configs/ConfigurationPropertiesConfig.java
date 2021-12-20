@@ -1,4 +1,4 @@
-package com.example.parking_manager_system;
+package com.example.parking_manager_system.Configs;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,6 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConfigurationPropertiesConfig {
     String authKey;
-    String adminName;
+    String username;
     String password;
 }
