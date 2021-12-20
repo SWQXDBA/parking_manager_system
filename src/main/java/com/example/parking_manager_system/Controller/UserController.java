@@ -60,8 +60,8 @@ public class UserController {
         rentApply.setStartRentTime(model.startLeaseTime);
         rentApply.setEndRentTime(model.expirationTime);
         rentApply.setTargetParkingSpace(parkingSpace);
+        rentApply.setRentPrice(model.rentPrice);
         rentApplyService.applyRent(rentApply);
-
         return AjaxResult.success("申请已提交");
     }
     @RequestMapping(value = "login",method = {RequestMethod.POST})

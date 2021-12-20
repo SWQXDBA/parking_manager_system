@@ -13,7 +13,7 @@ import java.util.List;
 @SpringBootTest
 class ParkingManagerSystemApplicationTests {
 
-    @Autowired
+/*    @Autowired
     ParkingSpaceDao spaceDao;
     @Autowired
     AdminUserService adminUserService;
@@ -59,5 +59,5 @@ class ParkingManagerSystemApplicationTests {
             list.add(space);
         }
         spaceDao.saveAll(list);
-    }
+    }*/
 }

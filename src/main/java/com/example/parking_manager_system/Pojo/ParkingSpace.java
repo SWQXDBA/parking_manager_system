@@ -17,6 +17,10 @@ import java.sql.Timestamp;
 @Data
 //@ApiModel(value ="车位实体类")
 public class ParkingSpace {
+   public static enum ParkingState{
+        //空闲 已出租 被占用
+        FREE,RENTED,OCCUPY
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
@@ -33,6 +37,8 @@ public class ParkingSpace {
     @ApiModelProperty(value = "租了它的用户")
     ParkingUser leaseholder;//租户
 
+    @Enumerated(value = EnumType.STRING)
+    ParkingState parkingState;
     @CreationTimestamp
     Timestamp createTime;
     @UpdateTimestamp
@@ -53,7 +59,7 @@ public class ParkingSpace {
         m.zone=zone;
         m.startLeaseTime=startLeaseTime;
         m.expirationTime=expirationTime;
-
+        m.parkingState = parkingState;
         return m;
     }
 }

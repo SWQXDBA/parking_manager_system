@@ -1,6 +1,8 @@
 package com.example.parking_manager_system.Service;
 
 import com.example.parking_manager_system.Dao.ParkingSpaceDao;
+import com.example.parking_manager_system.Dao.UserDao;
+import com.example.parking_manager_system.ModelView.ParkingSpaceUpdateViewModel;
 import com.example.parking_manager_system.Pojo.ParkingSpace;
 import com.example.parking_manager_system.Pojo.ParkingUser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,45 @@ import java.util.Optional;
 public class ParkingSpaceService {
     @Autowired
     ParkingSpaceDao spaceDao;
+    @Autowired
+    UserDao userDao;
+    public boolean update(ParkingSpaceUpdateViewModel viewModel){
 
+        ParkingSpace space = spaceDao.getParkingSpacesByIdInZoneAndZone(viewModel.idInZone, viewModel.zone);
+        if(viewModel.startRentTime!=null){
+            space.setStartLeaseTime(viewModel.startRentTime);
+        }
+        if(viewModel.endRentTime!=null){
+            space.setExpirationTime (viewModel.endRentTime);
+        }
+        if(viewModel.userName!=null){
+            ParkingUser user = userDao.getParkingUserByUserName(viewModel.userName);
+            if(user==null){
+                return false;
+            }
+            space.setLeaseholder(user);
+        }
+        if(viewModel.parkingState!=null){
+            String state = viewModel.parkingState;
+            ParkingSpace.ParkingState stateEm = ParkingSpace.ParkingState.FREE;
+            switch (state) {
+                case "RENTED":
+                    stateEm = ParkingSpace.ParkingState.RENTED;
+                    break;
+                case "FREE":
+                    stateEm = ParkingSpace.ParkingState.FREE;
+                    break;
+                case "OCCUPY":
+                    stateEm = ParkingSpace.ParkingState.OCCUPY;
+                    break;
+            }
+
+            space.setParkingState (stateEm);
+        }
+        spaceDao.save(space);
+        return true;
+
+    }
     /**
      * 出租停车场
      *
