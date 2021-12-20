@@ -123,7 +123,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "refuse",method = RequestMethod.GET)
-    @ApiOperation(value="批准租借请求", notes="批准用户的租借请求" ,httpMethod="GET")
+    @ApiOperation(value="拒绝租借请求", notes="拒绝用户的租借请求" ,httpMethod="GET")
     public AjaxResult refuseRent(@RequestParam(name = "applyId") long rentApplyId,
                                 HttpServletRequest request) {
         AdminUser user = adminUserService.getUserByRequest(request);
