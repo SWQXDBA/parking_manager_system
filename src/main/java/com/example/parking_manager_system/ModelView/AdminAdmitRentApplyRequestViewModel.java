@@ -14,4 +14,5 @@ public class AdminAdmitRentApplyRequestViewModel {
     public Timestamp expirationTime;
 
 
+    public int rentPrice;
 }

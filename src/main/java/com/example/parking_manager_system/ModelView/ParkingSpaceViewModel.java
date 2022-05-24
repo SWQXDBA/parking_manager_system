@@ -1,5 +1,7 @@
 package com.example.parking_manager_system.ModelView;
 
+import com.example.parking_manager_system.Pojo.ParkingSpace;
+
 import java.sql.Timestamp;
 
 /**
@@ -20,5 +22,6 @@ public class ParkingSpaceViewModel {
     public ParkingUserViewModel leaseholder;
 
 
+    public ParkingSpace.ParkingState parkingState;
 
 }

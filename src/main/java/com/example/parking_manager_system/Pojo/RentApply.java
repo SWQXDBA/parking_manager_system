@@ -40,6 +40,7 @@ public class RentApply {
     @ManyToOne
     ParkingSpace targetParkingSpace;
 
+    int rentPrice;
     @CreationTimestamp
     Timestamp createTime;
     @UpdateTimestamp
@@ -49,6 +50,7 @@ public class RentApply {
     public String toString() {
         return
                 "申请用户: " + applyUser +
-                ", 目标停车位: " + targetParkingSpace ;
+                ", 目标停车位: " + targetParkingSpace +
+                ",收款"+rentPrice+"元";
     }
 }

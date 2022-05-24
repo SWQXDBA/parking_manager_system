@@ -1,5 +1,7 @@
 package com.example.parking_manager_system.Controller;
 
+import com.example.parking_manager_system.Dao.ParkingSpaceDao;
+import com.example.parking_manager_system.ModelView.ParkingSpaceUpdateViewModel;
 import com.example.parking_manager_system.ModelView.ParkingSpaceViewModel;
 import com.example.parking_manager_system.Pojo.AjaxResult;
 import com.example.parking_manager_system.Pojo.ParkingSpace;
@@ -9,10 +11,7 @@ import com.example.parking_manager_system.Service.UserService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -29,11 +28,27 @@ public class ParkingSpaceController {
     @Autowired
     UserService userService;
 
+
     @RequestMapping(value = "getAll", method = RequestMethod.POST)
     @ApiOperation(value = "获取所有停车位", notes = "获取所有停车位", httpMethod = "POST")
     public List<ParkingSpaceViewModel> getAll() {
         List<ParkingSpace> entities = parkingSpaceService.getAllSpacesSaveData();
         return entities.stream().map(ParkingSpace::getViewModel).collect(Collectors.toList());
+    }
+
+    @RequestMapping(value = "update", method = RequestMethod.POST)
+    @ApiOperation(value = "更新车位信息", notes = "编辑车位信息", httpMethod = "POST")
+    public AjaxResult update(HttpServletRequest request,@RequestBody ParkingSpaceUpdateViewModel viewModel) {
+        ParkingUser user = userService.getUserByRequest(request);
+        if (user == null) {
+            return AjaxResult.error("用户未登录");
+        }
+        if (parkingSpaceService.update(viewModel)) {
+          return   AjaxResult.success("修改成功");
+        }else{
+          return   AjaxResult.error("修改失败 请检查用户名是否正确");
+        }
+
     }
 
     @RequestMapping(value = "getByUser", method = RequestMethod.POST)
