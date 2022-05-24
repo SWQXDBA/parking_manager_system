@@ -33,8 +33,6 @@ public class ParkingSpaceController {
     @ApiOperation(value = "获取所有停车位", notes = "获取所有停车位", httpMethod = "POST")
     public List<ParkingSpaceViewModel> getAll() {
         List<ParkingSpace> entities = parkingSpaceService.getAllSpacesSaveData();
-
-
         return entities.stream().map(ParkingSpace::getViewModel).collect(Collectors.toList());
     }
 

@@ -74,8 +74,8 @@ public class UserController {
         }
         Cookie cookie = new Cookie("token", token);
         cookie.setPath("/");//所有访问都应该带上这个cookie
-
         response.addCookie(cookie);
+     //   response.addHeader("Access-Control-Allow-Credentials","true");
         return AjaxResult.success();
     }
 /*

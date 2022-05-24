@@ -1,12 +1,12 @@
 server:
-  port: 8998
+  port: 8093
 spring:
   jpa:
     hibernate:
       ddl-auto: update
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/parking
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3307/parking
     username: root
     password: q12345
   jackson:
