@@ -98,10 +98,10 @@ public class AdminController {
     @RequestMapping(value = "admit",method = RequestMethod.GET)
     @ApiOperation(value="批准租借请求", notes="批准用户的租借请求" ,httpMethod="GET")
     public AjaxResult admitRent(@RequestParam(name = "applyId") long rentApplyId,
-                           HttpServletRequest request) {
+                           HttpServletRequest request) throws UnLoginException {
         AdminUser user = adminUserService.getUserByRequest(request);
         if(user==null){
-            return AjaxResult.error("管理员未登录或者token已过期");
+            throw new UnLoginException();
         }
         RentApply rentApply = rentApplyService.getRentById(rentApplyId);
         if(rentApply==null){
@@ -182,7 +182,9 @@ public class AdminController {
         if(token==null){
             return AjaxResult.error("用户名或密码错误");
         }
-        response.addCookie(new Cookie("token",token));
+        final Cookie cookie = new Cookie("token", token);
+        cookie.setPath("/api");
+        response.addCookie(cookie);
       //  response.addHeader("Access-Control-Allow-Credentials","true");
         return AjaxResult.success();
     }

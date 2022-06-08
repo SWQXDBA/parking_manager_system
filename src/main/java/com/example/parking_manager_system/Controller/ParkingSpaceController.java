@@ -1,5 +1,6 @@
 package com.example.parking_manager_system.Controller;
 
+import com.example.parking_manager_system.Exceptions.UnLoginException;
 import com.example.parking_manager_system.ModelView.ParkingSpaceUpdateViewModel;
 import com.example.parking_manager_system.ModelView.ParkingSpaceViewModel;
 import com.example.parking_manager_system.Pojo.AdminUser;
@@ -40,10 +41,10 @@ public class ParkingSpaceController {
 
     @RequestMapping(value = "update", method = RequestMethod.POST)
     @ApiOperation(value = "更新车位信息", notes = "编辑车位信息", httpMethod = "POST")
-    public AjaxResult update(HttpServletRequest request,@RequestBody ParkingSpaceUpdateViewModel viewModel) {
+    public AjaxResult update(HttpServletRequest request,@RequestBody ParkingSpaceUpdateViewModel viewModel) throws UnLoginException {
         AdminUser user = adminUserService.getUserByRequest(request);
         if(user==null){
-            return AjaxResult.error("管理员未登录或者token已过期");
+            throw new UnLoginException();
         }
         if (parkingSpaceService.update(viewModel)) {
           return   AjaxResult.success("修改成功");
