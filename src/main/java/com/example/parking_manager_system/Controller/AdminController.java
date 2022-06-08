@@ -183,7 +183,7 @@ public class AdminController {
             return AjaxResult.error("用户名或密码错误");
         }
         final Cookie cookie = new Cookie("token", token);
-        cookie.setPath("/api");
+        cookie.setPath("/");
         response.addCookie(cookie);
       //  response.addHeader("Access-Control-Allow-Credentials","true");
         return AjaxResult.success();
