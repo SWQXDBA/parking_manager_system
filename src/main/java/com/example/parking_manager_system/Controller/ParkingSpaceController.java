@@ -1,11 +1,12 @@
 package com.example.parking_manager_system.Controller;
 
-import com.example.parking_manager_system.Dao.ParkingSpaceDao;
 import com.example.parking_manager_system.ModelView.ParkingSpaceUpdateViewModel;
 import com.example.parking_manager_system.ModelView.ParkingSpaceViewModel;
+import com.example.parking_manager_system.Pojo.AdminUser;
 import com.example.parking_manager_system.Pojo.AjaxResult;
 import com.example.parking_manager_system.Pojo.ParkingSpace;
 import com.example.parking_manager_system.Pojo.ParkingUser;
+import com.example.parking_manager_system.Service.AdminUserService;
 import com.example.parking_manager_system.Service.ParkingSpaceService;
 import com.example.parking_manager_system.Service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -27,7 +28,8 @@ public class ParkingSpaceController {
     ParkingSpaceService parkingSpaceService;
     @Autowired
     UserService userService;
-
+    @Autowired
+    AdminUserService adminUserService;
 
     @RequestMapping(value = "getAll", method = RequestMethod.POST)
     @ApiOperation(value = "获取所有停车位", notes = "获取所有停车位", httpMethod = "POST")
@@ -39,9 +41,9 @@ public class ParkingSpaceController {
     @RequestMapping(value = "update", method = RequestMethod.POST)
     @ApiOperation(value = "更新车位信息", notes = "编辑车位信息", httpMethod = "POST")
     public AjaxResult update(HttpServletRequest request,@RequestBody ParkingSpaceUpdateViewModel viewModel) {
-        ParkingUser user = userService.getUserByRequest(request);
-        if (user == null) {
-            return AjaxResult.error("用户未登录");
+        AdminUser user = adminUserService.getUserByRequest(request);
+        if(user==null){
+            return AjaxResult.error("管理员未登录或者token已过期");
         }
         if (parkingSpaceService.update(viewModel)) {
           return   AjaxResult.success("修改成功");
