@@ -70,6 +70,7 @@ public class AdminController {
             space.setIdInZone(""+i);
             list.add(space);
         }
+        spaceDao.deleteAll();
         spaceDao.saveAll(list);
     }
     @RequestMapping(value = "addAdmin",method = RequestMethod.POST)
