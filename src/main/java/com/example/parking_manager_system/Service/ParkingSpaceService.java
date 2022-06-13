@@ -78,6 +78,7 @@ public class ParkingSpaceService {
                 }
             }
         }*/
+        space.setParkingState(ParkingSpace.ParkingState.RENTED);
         space.setStartLeaseTime(from);
         space.setExpirationTime(to);
         space.setLeaseholder(user);

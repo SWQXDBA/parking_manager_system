@@ -39,7 +39,6 @@ public class UserController {
     }
 
     @RequestMapping(value = "rent",method = RequestMethod.POST)
-
     @ApiOperation(value="用户发起租借请求", notes="用户发起租借请求" ,httpMethod="POST")
     public AjaxResult rent(@RequestBody AdminAdmitRentApplyRequestViewModel model,
                            HttpServletRequest request) {
