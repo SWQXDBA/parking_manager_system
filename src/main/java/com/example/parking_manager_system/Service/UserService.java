@@ -59,13 +59,17 @@ public class UserService {
             if(tokenCookie==null){
                 return null;
             }
+
             String token = tokenCookie.getValue();
+            if(!tokens.contains(token)){
+                return null;
+            }
             DecodedJWT decode = jwtHelper.decode(token);
             Long userId = decode.getClaim("userId").asLong();
 
             Optional<ParkingUser> optional = userDao.findById(userId);
 
-           return optional.get();
+           return optional.orElse(null);
         }catch (Exception e){
             return null;
         }

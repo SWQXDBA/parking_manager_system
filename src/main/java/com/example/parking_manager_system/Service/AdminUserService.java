@@ -62,6 +62,9 @@ public class AdminUserService {
                 return null;
             }
             String token = tokenCookie.getValue();
+            if(!tokens.contains(token)){
+                return null;
+            }
             DecodedJWT decode = jwtHelper.decode(token);
             Long userId = decode.getClaim("userId").asLong();
 
