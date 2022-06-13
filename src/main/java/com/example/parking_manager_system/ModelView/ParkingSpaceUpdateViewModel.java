@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class ParkingSpaceUpdateViewModel {
     public String zone;
     public String idInZone;
-  public Timestamp startRentTime;
+   public Timestamp startRentTime;
     public Timestamp endRentTime;
     public String userName;
     public String parkingState;
