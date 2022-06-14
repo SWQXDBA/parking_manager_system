@@ -33,6 +33,7 @@ public class AdminUserService {
     ConfigurationPropertiesConfig config;
     Set<String> tokens = new HashSet<>();
 
+   public static String tokenCookieName = "adminToken";
     /**
      * 检查是否存在这个token以及token的有效性
      * @param token
@@ -57,7 +58,7 @@ public class AdminUserService {
 
     public AdminUser getUserByRequest(HttpServletRequest request) {
         try{
-            Cookie tokenCookie = WebUtils.getCookie(request, "token");
+            Cookie tokenCookie = WebUtils.getCookie(request, tokenCookieName);
             if(tokenCookie==null){
                 return null;
             }

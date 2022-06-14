@@ -55,17 +55,16 @@ public class AdminController {
     UserDao userDao;
     @Autowired
     OptionLogDao optionLogDao;
-    @Autowired
-    ParkingSpaceDao parkingSpaceDao;
+
 
     @RequestMapping(value = "init",method = {RequestMethod.GET})
     @ApiOperation(value="初始化管理员", notes="初始化管理员" ,httpMethod="GET")
     public void init() {
+        optionLogDao.deleteAll();
         spaceDao.deleteAll();
         adminUserDao.deleteAll();
         userDao.deleteAll();
-        optionLogDao.deleteAll();
-        parkingSpaceDao.deleteAll();
+
         adminUserService.register(config.getUsername(),config.getPassword());
         List<ParkingSpace> list = new ArrayList<>();
         for (int i = 1; i <= 30; i++) {
@@ -104,8 +103,6 @@ public class AdminController {
         log.setAdminUser(user);
         log.setData("管理员"+user+" 新增了管理员:"+admin.userName);
         optionLogService.save(log);
-
-
 
         return AjaxResult.success("添加成功!");
     }
@@ -199,7 +196,7 @@ public class AdminController {
         if(token==null){
             return AjaxResult.error("用户名或密码错误");
         }
-        final Cookie cookie = new Cookie("token", token);
+        final Cookie cookie = new Cookie(AdminUserService.tokenCookieName, token);
         cookie.setPath("/");
         response.addCookie(cookie);
       //  response.addHeader("Access-Control-Allow-Credentials","true");
