@@ -1,7 +1,10 @@
 package com.example.parking_manager_system.Controller;
 
 import com.example.parking_manager_system.Configs.ConfigurationPropertiesConfig;
+import com.example.parking_manager_system.Dao.AdminUserDao;
+import com.example.parking_manager_system.Dao.OptionLogDao;
 import com.example.parking_manager_system.Dao.ParkingSpaceDao;
+import com.example.parking_manager_system.Dao.UserDao;
 import com.example.parking_manager_system.Exceptions.UnLoginException;
 import com.example.parking_manager_system.ModelView.AdminGetAllRentApplyResponseViewModel;
 import com.example.parking_manager_system.ModelView.AdminRegisterRequestViewModel;
@@ -46,10 +49,23 @@ public class AdminController {
     ConfigurationPropertiesConfig config;
     @Autowired
     ParkingSpaceDao spaceDao;
+    @Autowired
+    AdminUserDao adminUserDao;
+    @Autowired
+    UserDao userDao;
+    @Autowired
+    OptionLogDao optionLogDao;
+    @Autowired
+    ParkingSpaceDao parkingSpaceDao;
 
     @RequestMapping(value = "init",method = {RequestMethod.GET})
     @ApiOperation(value="初始化管理员", notes="初始化管理员" ,httpMethod="GET")
     public void init() {
+        spaceDao.deleteAll();
+        adminUserDao.deleteAll();
+        userDao.deleteAll();
+        optionLogDao.deleteAll();
+        parkingSpaceDao.deleteAll();
         adminUserService.register(config.getUsername(),config.getPassword());
         List<ParkingSpace> list = new ArrayList<>();
         for (int i = 1; i <= 30; i++) {
